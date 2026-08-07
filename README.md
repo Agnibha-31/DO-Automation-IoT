@@ -108,7 +108,7 @@ The dashboard accepts both raw and corrected DO channels from the wider system. 
 
 ## Dashboard tour and screenshots
 
-All ten repository screenshots are embedded below. GitHub loads them directly from the existing **Dahsboard Images** folder. The folder name is misspelled in the repository, so the README intentionally uses that exact spelling. If the folder is renamed later, update every image path in this file.
+All ten repository screenshots are embedded below. GitHub loads them directly from the existing **Dashboard Images** folder. The folder name is misspelled in the repository, so the README intentionally uses that exact spelling. If the folder is renamed later, update every image path in this file.
 
 ### 1. Main DO dashboard
 
@@ -334,7 +334,7 @@ The parameter pages request 168 history points and label the view as seven days.
 
 ~~~text
 DO-Automation-IoT/
-├── Dahsboard Images/              # Ten dashboard screenshots; spelling is intentional
+├── Dashboard Images/              # Ten dashboard screenshots; spelling is intentional
 ├── backend/
 │   ├── src/
 │   │   ├── middleware/            # JWT/device authentication and async error wrapper
