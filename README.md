@@ -57,7 +57,7 @@ The repository name contains the word “Automation,” but the code currently i
 - [Contributing](#contributing)
 - [Licensing and attribution](#licensing-and-attribution)
 - [Citation](#citation)
-- [Developer and collaboration](#developer-and-collaboration)
+- [Developer](#developer)
 
 ---
 
@@ -1252,20 +1252,10 @@ For a formal release, add a version tag and archive it with a service that provi
 
 ---
 
-## Developer and collaboration
+## Developer
 
-Developed by **Agnibha Basak**.
+[Agnibha-31](https://github.com/Agnibha-31)
 
-- GitHub: [@Agnibha-31](https://github.com/Agnibha-31)
-- Repository: [DO-Automation-IoT](https://github.com/Agnibha-31/DO-Automation-IoT)
-- Questions, feature requests, and business/custom-build enquiries: [open a GitHub issue](https://github.com/Agnibha-31/DO-Automation-IoT/issues)
 
-When requesting a custom dashboard or IoT build, include the intended domain, sensor model and protocol, required measurements, sampling interval, deployment environment, user roles, alert channels, data-retention needs, export formats, and whether hardware integration is part of the request. Do not include passwords, API keys, private datasets, or confidential site information in a public issue.
 
 ---
-
-## Acknowledgements
-
-The interface uses open-source React ecosystem packages, including Radix UI primitives and shadcn/ui-inspired components. See [frontend/src/Attributions.md](./frontend/src/Attributions.md), frontend/package.json, backend/package.json, and the lock files for dependency details.
-
-If you find this project useful, consider opening an issue with your use case, contributing a tested improvement, or starring the repository.
