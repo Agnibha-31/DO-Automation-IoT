@@ -27,9 +27,6 @@ LICENSE-DATA file applies only to:
      "Dahsboard Images" directory, to the extent that Agnibha Basak owns the
      relevant rights.
 
-As of the repository audit at commit 5090084 on 7 August 2026, this repository
-does not contain a standalone recorded dataset file. Data stored in a live
-PostgreSQL database is not automatically covered by LICENSE-DATA.
 
 The data license does not grant permission to redistribute live user data,
 customer data, personal information, confidential site information, device
