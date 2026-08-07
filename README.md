@@ -108,67 +108,67 @@ The dashboard accepts both raw and corrected DO channels from the wider system. 
 
 ## Dashboard tour and screenshots
 
-All ten repository screenshots are embedded below. GitHub loads them directly from the existing **Dashboard Images** folder. The folder name is misspelled in the repository, so the README intentionally uses that exact spelling. If the folder is renamed later, update every image path in this file.
+All ten repository screenshots are embedded below and loaded directly from the existing `Dashboard Images/` folder.
 
 ### 1. Main DO dashboard
 
 The home page combines the latest values for raw DO, corrected DO, temperature, pressure, and saturation. Each metric has a summary card and a recent trend chart. A connection indicator, time, location/weather information, refresh control, and navigation are kept visible around the monitoring area.
 
-![DO Automation IoT main dashboard](./Dahsboard%20Images/DO%20Dashboard%20Page.png)
+![DO Automation IoT main dashboard](./Dashboard%20Images/DO%20Dashboard%20Page.png)
 
 ### 2. Old DO concentration: raw sensor value
 
 “Old DO” is the interface name used for the uncorrected value stored in the **do_concentration** field. This page focuses on the raw measurement, shows its current status, and plots the recent series. The word “old” does not mean an older timestamp; it means the original or pre-correction DO channel.
 
-![Raw or old DO concentration page](./Dahsboard%20Images/Old%20DO%20Concentration%20Page.png)
+![Raw or old DO concentration page](./Dashboard%20Images/Old%20DO%20Concentration%20Page.png)
 
 ### 3. New DO concentration: corrected value
 
 “New DO” is the corrected channel stored as **corrected_do**. It is supplied to the dashboard by the upstream sensing and correction part of the wider DO system and is displayed alongside the original reading.
 
-![Corrected or new DO concentration page](./Dahsboard%20Images/New%20DO%20Concentration%20Page.png)
+![Corrected or new DO concentration page](./Dashboard%20Images/New%20DO%20Concentration%20Page.png)
 
 ### 4. Temperature
 
 The temperature page isolates the water-temperature series, current value, status, minimum, maximum, average, and recent variation. Temperature is stored in degrees Celsius.
 
-![Temperature monitoring page](./Dahsboard%20Images/Temperature%20Page.png)
+![Temperature monitoring page](./Dashboard%20Images/Temperature%20Page.png)
 
 ### 5. Pressure
 
 The pressure page presents the submitted pressure signal in kilopascals. The application treats this as a monitored input; it does not derive pressure from altitude or weather.
 
-![Pressure monitoring page](./Dahsboard%20Images/Pressure%20Page.png)
+![Pressure monitoring page](./Dashboard%20Images/Pressure%20Page.png)
 
 ### 6. DO saturation
 
 The saturation page shows dissolved-oxygen saturation as a percentage. Values can exceed 100% when water is supersaturated, so the interface supports values above 100 rather than clipping them.
 
-![Dissolved oxygen saturation page](./Dahsboard%20Images/DO%20Saturation%20Page.png)
+![Dissolved oxygen saturation page](./Dashboard%20Images/DO%20Saturation%20Page.png)
 
 ### 7. Analytics
 
 The analytics page lets the operator select a parameter and time range. It calculates descriptive statistics from the loaded readings and draws a trend, moving average, and variation band. Some advanced cards are interface previews rather than live calculations; see [Analytics and monitoring indicators](#analytics-and-monitoring-indicators).
 
-![DO analytics page](./Dahsboard%20Images/DO%20Analytics%20Page.png)
+![DO analytics page](./Dashboard%20Images/DO%20Analytics%20Page.png)
 
 ### 8. Data download
 
 The download page lets a signed-in user choose a date range, measurements, file format, raw-data option, analytics option, and compression. The backend records export metadata so recent downloads can be listed.
 
-![Data download and export page](./Dahsboard%20Images/Data%20Download%20Page.png)
+![Data download and export page](./Dashboard%20Images/Data%20Download%20Page.png)
 
 ### 9. Settings
 
 The settings page contains profile, language, timezone, location, refresh, visual-quality, notification, security, and retention controls. Some controls persist to the backend, while others currently change only the interface state. The exact distinction is documented later.
 
-![Dashboard settings page](./Dahsboard%20Images/Settings%20Page.png)
+![Dashboard settings page](./Dashboard%20Images/Settings%20Page.png)
 
 ### 10. Device configuration
 
 The device page displays the account, sensor identifier, and masked API key. It can reveal, copy, or regenerate the device key, shows storage information, provides a Python request example, and offers permanent account deletion.
 
-![Device configuration page](./Dahsboard%20Images/Device%20Configuration%20Page.png)
+![Device configuration page](./Dashboard%20Images/Device%20Configuration%20Page.png)
 
 ---
 
