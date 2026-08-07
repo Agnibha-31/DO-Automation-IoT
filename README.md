@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="./LICENSE"><img alt="Code license: Apache 2.0" src="https://img.shields.io/badge/code%20license-Apache--2.0-blue.svg"></a>
-  <a href="./LICENSE-DATA"><img alt="Dashboard media license: CC BY 4.0" src="https://img.shields.io/badge/media%20license-CC%20BY%204.0-green.svg"></a>
+  <a href="./LICENSE-MEDIA"><img alt="Dashboard media license: CC BY 4.0" src="https://img.shields.io/badge/media%20license-CC%20BY%204.0-green.svg"></a>
   <img alt="Frontend: React and TypeScript" src="https://img.shields.io/badge/frontend-React%20%2B%20TypeScript-149eca.svg">
   <img alt="Backend: Node.js and Express" src="https://img.shields.io/badge/backend-Node.js%20%2B%20Express-43853d.svg">
   <img alt="Database: PostgreSQL" src="https://img.shields.io/badge/database-PostgreSQL-4169e1.svg">
