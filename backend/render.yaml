@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: do-sensor-backend
+    runtime: node
+    region: oregon
+    buildCommand: npm ci
+    startCommand: node src/index.js
+    healthCheckPath: /api/health
+    healthCheckInterval: 30
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRY
+        value: 24h
+      - key: CORS_ORIGIN
+        value: https://do-sensor-dashboard.vercel.app
+      - key: DEVICE_ID
+        value: sensor-001
+      - key: DEVICE_API_KEY
+        value: change-me-in-production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=512
+
+  - type: postgres
+    name: do-sensor-db
+    region: oregon
+    plan: free
+    ipAllowList: []
