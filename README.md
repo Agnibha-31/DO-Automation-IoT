@@ -1161,7 +1161,7 @@ This repository uses a split license so the software and project-authored dashbo
 | Material | License | File |
 |---|---|---|
 | Project-owned source code, configuration, documentation source, and project build artifacts | Apache License 2.0 | [LICENSE](./LICENSE) |
-| Project-authored dashboard screenshots, subject to third-party component rights | Creative Commons Attribution 4.0 International | [LICENSE-DATA](./LICENSE-DATA) |
+| Project-authored dashboard screenshots, subject to third-party component rights | Creative Commons Attribution 4.0 International | [LICENSE-MEDIA](./LICENSE-MEDIA) |
 | Copyright and scope statement | Project notice | [NOTICE](./NOTICE) |
 | Third-party frontend components and assets | Their respective licenses | [frontend/src/Attributions.md](./frontend/src/Attributions.md), package manifests, and lock files |
 
