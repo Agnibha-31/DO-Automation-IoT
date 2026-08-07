@@ -18,7 +18,7 @@ export const getTimezoneFromCoordinates = async (
 ): Promise<string | null> => {
   try {
     // Try TimeZone API first (free tier available)
-    const timezoneApiUrl = `https://api.timezonedb.com/v2.1/get-time-zone?key=free&format=json&by=position&lat=${latitude}&lng=${longitude}`;
+    const timezoneApiUrl = `**********`;
     
     try {
       const response = await fetch(timezoneApiUrl);
@@ -31,7 +31,7 @@ export const getTimezoneFromCoordinates = async (
     }
 
     // Fallback: Use Google Maps Timezone API (requires API key, but can work without for testing)
-    const googleTimezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${Math.floor(Date.now() / 1000)}&key=AIzaSyBsHr8A3LhqMlZxXJ_5YDQJ2IwA5HYhXBg`;
+    const googleTimezoneUrl = `**********`;
     
     try {
       const response = await fetch(googleTimezoneUrl);
