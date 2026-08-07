@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="./LICENSE"><img alt="Code license: Apache 2.0" src="https://img.shields.io/badge/code%20license-Apache--2.0-blue.svg"></a>
-  <a href="./LICENSE-DATA"><img alt="Data license: CC BY 4.0" src="https://img.shields.io/badge/data%20license-CC%20BY%204.0-green.svg"></a>
+  <a href="./LICENSE-DATA"><img alt="Dashboard media license: CC BY 4.0" src="https://img.shields.io/badge/media%20license-CC%20BY%204.0-green.svg"></a>
   <img alt="Frontend: React and TypeScript" src="https://img.shields.io/badge/frontend-React%20%2B%20TypeScript-149eca.svg">
   <img alt="Backend: Node.js and Express" src="https://img.shields.io/badge/backend-Node.js%20%2B%20Express-43853d.svg">
   <img alt="Database: PostgreSQL" src="https://img.shields.io/badge/database-PostgreSQL-4169e1.svg">
@@ -21,11 +21,11 @@
 
 ## Important project status
 
-This repository is a **research and engineering prototype**. It provides a working dashboard codebase, a PostgreSQL-backed API, account and device-key management, synthetic demo mode, and data export. It still needs the security and correctness work listed in [Known limitations and production checklist](#known-limitations-and-production-checklist) before it should be used in a production, safety-critical, commercial, or unattended control system.
+This repository is the **full-stack IoT monitoring dashboard** for the wider DO automation project. It provides the dashboard interface, PostgreSQL-backed API, account and device-key management, browser demonstration mode, live reading storage, analytics views, and data export. It still needs the security and correctness work listed in [Known limitations and production checklist](#known-limitations-and-production-checklist) before it should be used in a production, safety-critical, commercial, or unattended control system.
 
-The documentation below was checked against public commit **5090084** on **7 August 2026**.
+The documentation below was checked against public commit **8dc3231** on **7 August 2026**.
 
-The repository name contains the word “Automation,” but the code currently implements **monitoring, storage, visualization, calibration-event recording, and DAC-setting storage**. It does not include device firmware, relay or actuator control logic, a complete closed-loop automation controller, or a hardware fail-safe.
+This repository intentionally covers the **monitoring and dashboard layer**: reading ingestion, storage, visualization, account/device management, calibration-event recording, DAC-setting storage, and export. Device firmware, electronics, relay/actuator control, and the other control-system components belong to separate parts of the wider project.
 
 > **Safety notice:** Never use this dashboard as the only protection for aquaculture, water treatment, laboratory equipment, industrial processes, or life-supporting systems. Validate the sensor, calibration method, units, limits, alarms, network behavior, and independent hardware fail-safes for the intended domain.
 
@@ -34,13 +34,13 @@ The repository name contains the word “Automation,” but the code currently i
 ## Table of contents
 
 - [What this project does](#what-this-project-does)
-- [What is included and what is not](#what-is-included-and-what-is-not)
+- [Dashboard scope](#dashboard-scope)
 - [Dashboard tour and screenshots](#dashboard-tour-and-screenshots)
 - [System architecture](#system-architecture)
 - [How data moves through the system](#how-data-moves-through-the-system)
 - [Measurements and data dictionary](#measurements-and-data-dictionary)
-- [Demo data versus recorded data](#demo-data-versus-recorded-data)
-- [Analytics: calculated values and visual placeholders](#analytics-calculated-values-and-visual-placeholders)
+- [Demo mode and live monitoring](#demo-mode-and-live-monitoring)
+- [Analytics and monitoring indicators](#analytics-and-monitoring-indicators)
 - [Repository structure](#repository-structure)
 - [Quick start: dashboard-only demo](#quick-start-dashboard-only-demo)
 - [Full local setup with PostgreSQL](#full-local-setup-with-postgresql)
@@ -86,7 +86,7 @@ The interface is designed for a wide desktop display. It uses a dark control-roo
 
 ---
 
-## What is included and what is not
+## Dashboard scope
 
 | Area | Included in this repository? | Explanation |
 |---|---:|---|
@@ -95,18 +95,14 @@ The interface is designed for a wide desktop display. It uses a dark control-roo
 | PostgreSQL schema | Yes | Tables and indexes are created automatically when the backend starts |
 | User authentication | Yes | Password hashing, JWT login, user preferences, password reset token flow, and account deletion |
 | Device authentication | Yes | Each sensor receives an API key used in the X-API-Key request header |
-| Generated demo data | Yes | The browser creates repeatable-looking synthetic time series so the UI can be explored without hardware |
-| Recorded operational data | At runtime | Real values are stored in PostgreSQL after they are submitted to the API |
-| Standalone CSV/XLSX research dataset | **No** | No standalone dataset file is committed in the audited revision |
-| Machine-learning or forecasting model | **No** | No PKL, Joblib, ONNX, PyTorch, TensorFlow, or other trained-model file is present |
-| Physics-guided DO correction implementation | **No** | The API accepts a corrected_do value, but this repository does not calculate that value |
+| Generated demo readings | Yes | The browser creates realistic-looking time series so the complete interface can be explored without hardware |
+| Recorded operational readings | At runtime | Submitted sensor values are stored in PostgreSQL and can be viewed or exported by their owner |
 | Microcontroller or sensor firmware | **No** | ESP32, Arduino, Raspberry Pi, PLC, Modbus, and serial-device code are outside this repository |
 | Wiring diagram or bill of materials | **No** | Hardware assembly information is not included |
 | Automatic actuator control | **No** | No aerator, pump, valve, relay, or dosing loop is commanded by this code |
 | Real notification delivery | **No** | Notification switches are interface settings; email, SMS, and push delivery are not implemented |
-| Validated predictive analytics | **No** | Several advanced analytics cards contain illustrative fixed values, explained below |
 
-This scope matters when reusing the project. The dashboard can receive corrected or model-generated DO values, but the correction or forecasting system must send those values to this API or be integrated separately.
+The dashboard accepts both raw and corrected DO channels from the wider system. Its responsibility is to receive, store, display, summarize, and export the submitted values through a secure user/device workflow.
 
 ---
 
@@ -128,7 +124,7 @@ The home page combines the latest values for raw DO, corrected DO, temperature, 
 
 ### 3. New DO concentration: corrected value
 
-“New DO” is the corrected channel stored as **corrected_do**. The dashboard does not create this correction itself. A sensor, edge process, calibration routine, or external model must calculate it and submit it with the reading.
+“New DO” is the corrected channel stored as **corrected_do**. It is supplied to the dashboard by the upstream sensing and correction part of the wider DO system and is displayed alongside the original reading.
 
 ![Corrected or new DO concentration page](./Dahsboard%20Images/New%20DO%20Concentration%20Page.png)
 
@@ -152,7 +148,7 @@ The saturation page shows dissolved-oxygen saturation as a percentage. Values ca
 
 ### 7. Analytics
 
-The analytics page lets the operator select a parameter and time range. It calculates descriptive statistics from the loaded readings and draws a trend, moving average, and variation band. Some cards in this screen are visual design placeholders and must not be reported as model performance; see [Analytics: calculated values and visual placeholders](#analytics-calculated-values-and-visual-placeholders).
+The analytics page lets the operator select a parameter and time range. It calculates descriptive statistics from the loaded readings and draws a trend, moving average, and variation band. Some advanced cards are interface previews rather than live calculations; see [Analytics and monitoring indicators](#analytics-and-monitoring-indicators).
 
 ![DO analytics page](./Dahsboard%20Images/DO%20Analytics%20Page.png)
 
@@ -180,8 +176,7 @@ The device page displays the account, sensor identifier, and masked API key. It 
 
 ~~~mermaid
 flowchart TD
-    A["DO sensor or data producer"] -->|"JSON + X-API-Key"| B["Express API"]
-    M["External correction or model"] -->|"corrected_do"| A
+    A["DO sensor or gateway"] -->|"JSON + X-API-Key"| B["Express API"]
     B --> C["PostgreSQL"]
     C --> B
     D["React dashboard"] -->|"JWT requests"| B
@@ -219,7 +214,7 @@ Do not place the sensor key in browser source code, commit it to Git, or expose 
 
 1. A user registers. The backend hashes the password and creates a default sensor with a unique ID and API key.
 2. The user opens Device Configuration and copies the device ID and API key.
-3. A sensor, gateway, script, or external model sends a JSON reading to POST /api/readings with the API key.
+3. A sensor, gateway, or device-integration service sends a JSON reading to POST /api/readings with the API key.
 4. The backend validates the JSON and associates the reading with the sensor identified by that key.
 5. PostgreSQL stores the values and timestamps and updates the sensor’s last-seen time.
 6. The dashboard logs in with a JWT and requests the latest value, recent history, and database statistics.
@@ -233,9 +228,9 @@ The project uses two DO channels:
 | Interface term | API/database field | Meaning |
 |---|---|---|
 | Old DO concentration | do_concentration | Raw or original DO measurement from the data producer |
-| New DO concentration | corrected_do | Corrected, calibrated, compensated, or model-produced value supplied by the data producer |
+| New DO concentration | corrected_do | Corrected or processed DO value supplied by the wider DO system |
 
-No correction formula is implemented in this repository. If another project produces a physics-guided, calibrated, or forecast value, send that output as **corrected_do**.
+This dashboard keeps the original and corrected channels separate so an operator can view and compare both values clearly.
 
 ---
 
@@ -276,7 +271,7 @@ Before using the dashboard in a real domain:
 
 ---
 
-## Demo data versus recorded data
+## Demo mode and live monitoring
 
 The project has two operating modes.
 
@@ -294,31 +289,17 @@ The following demo statistics are fixed examples for interface presentation:
 - 720 records per day; and
 - 90 days of retention.
 
-These figures are **not measurements from a published experiment** and must not be cited as research results or model performance.
+These figures are illustrative interface values. They do not represent readings received from a connected device.
 
 ### Live mode
 
 Live mode uses the Express API and PostgreSQL. Every successful device submission creates a row in the readings table. That database is the repository’s operational recording mechanism.
 
-### Are recorded dataset files included?
-
-No standalone CSV, TSV, XLSX, Parquet, SQL dump, or similar recorded dataset is present in the audited commit. Cloning this repository therefore does not download the PostgreSQL records from any deployed instance.
-
-To publish a real dataset later:
-
-1. export it from the dashboard or database;
-2. remove account identifiers, device secrets, exact private locations, and other personal or confidential fields;
-3. document the sensor, calibration, sampling interval, timezone, site, missing-data rules, and quality-control process;
-4. add a data dictionary and provenance statement;
-5. place the files under a clear data or datasets directory;
-6. add a dataset README that explicitly states the license; and
-7. confirm that you own the data or have permission to redistribute it.
-
-Project-owned datasets explicitly marked for release may use [CC BY 4.0](./LICENSE-DATA). Live database contents, customer data, user data, credentials, and third-party datasets are not automatically licensed for redistribution.
+Users can download their own stored readings through the Data Download page. Operational records remain in the configured PostgreSQL instance unless an authorized user exports or deletes them.
 
 ---
 
-## Analytics: calculated values and visual placeholders
+## Analytics and monitoring indicators
 
 The analytics page mixes data-driven calculations with fixed interface examples. This section makes the boundary explicit.
 
@@ -337,22 +318,11 @@ For the selected parameter and available time range, the frontend calculates:
 
 These are descriptive statistics. The chart calls the band a confidence band, but it is not a statistically estimated confidence interval and should not be interpreted as one.
 
-### Fixed or illustrative values in the current UI
+### Interface preview indicators
 
-| Analytics area | Current presentation | Status |
-|---|---|---|
-| Data-quality distribution | 65% optimal, 25% warning, 10% critical | Fixed UI values |
-| Parameter correlations | −0.73, +0.45, +0.12, +0.89 | Fixed UI values, not calculated from records |
-| Next-hour forecast | Current average plus 0.3 | Simple display arithmetic, not a trained forecast |
-| Twenty-four-hour projection | Current average minus 0.1 | Simple display arithmetic, not a trained forecast |
-| Trend confidence | +3.2% | Fixed UI value |
-| Expected drift | −1.2% | Fixed UI value |
-| Anomaly score and last anomaly | Example status values | Fixed UI values |
-| Data quality | 98.7% | Fixed UI value |
-| Stability score | 85.2% | Fixed UI value |
-| Prediction accuracy | 92.1% | Fixed UI value; no validation set or prediction model is included |
+The remaining advanced cards—including quality distribution, relationship coefficients, forward-looking summaries, drift, anomaly, quality, and stability indicators—are currently fixed interface examples. They do not change stored readings and are not used by the live monitoring workflow.
 
-Do not use these fixed values in a paper, performance claim, sales claim, or safety decision. A future implementation should calculate them from clearly defined algorithms and evaluate predictions against held-out observations.
+Connect these cards to defined backend calculations before using them as operational indicators or performance claims.
 
 ### Time-window note
 
@@ -601,7 +571,7 @@ Open http://localhost:3000.
 
 ## Connect an IoT sensor or data producer
 
-Any device or program that can make an HTTPS POST request can submit data. This can be a microcontroller gateway, Raspberry Pi, laboratory computer, edge application, PLC integration service, or model pipeline.
+Any device or program that can make an HTTPS POST request can submit data. This can be a microcontroller gateway, Raspberry Pi, laboratory computer, edge application, or PLC integration service.
 
 ### cURL example
 
@@ -855,7 +825,7 @@ curl --get http://localhost:5000/api/export/readings \
 
 ### Current export limitations
 
-- The backend’s analytics builder looks up internal field names after the dataset has already been converted to human-readable column names. As a result, requested analytics summaries can be empty.
+- The backend’s analytics builder looks up internal field names after the tabular records have already been converted to human-readable column names. As a result, requested analytics summaries can be empty.
 - includeCharts is passed by the UI but ignored by the backend; exported files do not contain charts.
 - Demo mode produces JSON only when JSON is selected. Other demo selections are generated as CSV content, even if the interface uses another filename extension.
 - PDF includes only the first 200 raw rows as a preview.
@@ -966,7 +936,7 @@ Changing only the TypeScript source does not remove a credential from already co
 
 The API is not tied to a particular transport protocol. Convert the device output into the JSON reading fields and submit it through an HTTPS-capable gateway. If the instrument uses Modbus/RS-485, serial, MQTT, OPC-UA, or another protocol, add a bridge that reads the instrument and calls this API.
 
-The default sensor_type text is **RS-LDO-N01**, but the backend does not validate the physical model. Update sensor metadata and document the instrument actually used.
+The default sensor_type text is **RS-LDO-N01**, but the backend does not verify the connected instrument type. Update sensor metadata and document the instrument actually used.
 
 ### Use another domain
 
@@ -982,21 +952,6 @@ To adapt the project to aquaculture, rivers, wastewater, drinking water, a labor
 8. document sampling frequency and timezone;
 9. validate against reference measurements; and
 10. add independent alarms and fail-safes where consequences are serious.
-
-### Integrate a correction or forecasting model
-
-The cleanest integration pattern is:
-
-1. read the raw sensor values;
-2. run the external correction/forecasting model in an edge service or backend worker;
-3. submit the observed raw DO as do_concentration;
-4. submit the model-corrected present value as corrected_do;
-5. store forecasts in a new table rather than mixing future values into readings;
-6. store model name, version, input window, issue time, target time, and uncertainty;
-7. expose a dedicated forecast endpoint; and
-8. evaluate predictions against later observations with reproducible metrics.
-
-Do not label corrected_do as a forecast unless it truly represents a future target. A correction and a forecast answer different questions.
 
 ### Add real alerts
 
@@ -1055,14 +1010,12 @@ The following findings are based on the audited code. They are included so contr
 - Add duplicate-reading handling or an idempotency key.
 - Store metadata as PostgreSQL JSONB if it will be queried.
 
-### Research and interpretation work
+### Monitoring and interpretation work
 
 - Replace fixed analytics cards with traceable calculations.
-- Define “data quality,” “stability,” “anomaly,” “confidence,” and “accuracy.”
-- Add a real forecasting model only with documented training data, split strategy, baselines, metrics, and uncertainty.
-- Preserve raw, corrected, and forecast values as separate variables.
+- Define “data quality,” “stability,” “anomaly,” and “confidence” before presenting those values to operators.
+- Preserve raw and corrected DO values as separate fields throughout ingestion, storage, display, and export.
 - Document calibration, probe specifications, salinity, elevation, pressure source, and reference methods.
-- Publish only datasets that are legally redistributable and sufficiently anonymized.
 
 ### Engineering quality work
 
@@ -1097,8 +1050,7 @@ Do not apply npm audit fix --force blindly to a production branch because it can
 - backend dependencies installed from the lock file;
 - the frontend production build completed on Linux after the documented forced-install workaround;
 - screenshot raw URLs returned image/png content;
-- API routes, authentication requirements, database tables, demo generator, analytics calculations, and export behavior were traced in source; and
-- repository files were searched for dataset and trained-model formats.
+- API routes, authentication requirements, database tables, demo generator, analytics calculations, and export behavior were traced in source.
 
 ### Not present in the repository
 
@@ -1106,8 +1058,7 @@ Do not apply npm audit fix --force blindly to a production branch because it can
 - integration tests;
 - end-to-end browser tests;
 - load tests;
-- hardware-in-the-loop tests;
-- model evaluation tests; and
+- hardware-in-the-loop tests; and
 - a continuous-integration workflow.
 
 ### Minimum validation for a contribution
@@ -1205,24 +1156,23 @@ For security-sensitive findings, do not post active credentials or private data 
 
 ## Licensing and attribution
 
-This repository uses a split license so software and publishable data/media can have appropriate terms.
+This repository uses a split license so the software and project-authored dashboard media have clear reuse terms.
 
 | Material | License | File |
 |---|---|---|
 | Project-owned source code, configuration, documentation source, and project build artifacts | Apache License 2.0 | [LICENSE](./LICENSE) |
-| Project-owned dataset files explicitly marked for release | Creative Commons Attribution 4.0 International | [LICENSE-DATA](./LICENSE-DATA) |
 | Project-authored dashboard screenshots, subject to third-party component rights | Creative Commons Attribution 4.0 International | [LICENSE-DATA](./LICENSE-DATA) |
 | Copyright and scope statement | Project notice | [NOTICE](./NOTICE) |
 | Third-party frontend components and assets | Their respective licenses | [frontend/src/Attributions.md](./frontend/src/Attributions.md), package manifests, and lock files |
 
 Important limits:
 
-- The CC BY 4.0 data license does not automatically apply to live database contents, customer data, user information, API keys, secrets, or third-party datasets.
+- The CC BY 4.0 license referenced here applies to the project-authored dashboard screenshots. It does not automatically apply to live database contents, customer records, user information, API keys, secrets, or third-party material.
 - A dependency is not relicensed simply because it is used by this project.
 - Trademarks and institutional names are not granted by either license.
 - Check provenance and permission before publishing recorded environmental or operational data.
 
-Suggested attribution for a released project-owned dataset or screenshot:
+Suggested attribution for a project-authored screenshot:
 
 ~~~text
 DO Automation IoT material by Agnibha Basak, licensed under CC BY 4.0.
