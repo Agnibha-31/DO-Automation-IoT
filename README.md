@@ -368,7 +368,7 @@ DO-Automation-IoT/
 │   ├── vercel.json
 │   └── vite.config.ts
 ├── LICENSE                        # Apache License 2.0 for project software
-├── LICENSE-DATA                   # Creative Commons Attribution 4.0 legal code
+├── LICENSE-MEDIA                   # Creative Commons Attribution 4.0 legal code
 ├── NOTICE                         # Copyright, license scope, and third-party notice
 └── README.md
 ~~~
