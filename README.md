@@ -1254,8 +1254,8 @@ For a formal release, add a version tag and archive it with a service that provi
 
 ## Developer
 
-[Agnibha-31](https://github.com/Agnibha-31)
+### [Agnibha Basak](https://github.com/Agnibha-31)
 
-
+For IoT dashboards, real-time systems, automations, custom business platforms, deployment support, or a tailored version of this ecosystem, mail at: [remix.play31@gmail.com](https://mail.google.com/mail/?view=cm&fs=1&to=remix.play31@gmail.com&su=Smart%20Meter%20IoT%20Dashboard%20Enquiry)
 
 ---
