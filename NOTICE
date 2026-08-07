@@ -1,0 +1,72 @@
+DO Automation IoT
+Copyright 2026 Agnibha Basak
+
+This distribution contains software, documentation, dashboard screenshots,
+configuration, and generated build artifacts for the DO Automation IoT
+project.
+
+LICENSE SCOPE
+
+1. PROJECT SOFTWARE
+
+Unless a file or directory states otherwise, project-owned source code,
+configuration, documentation source, and project-generated build artifacts
+are licensed under the Apache License, Version 2.0. The complete license is
+provided in the root LICENSE file.
+
+2. PROJECT DATASETS AND SCREENSHOTS
+
+The Creative Commons Attribution 4.0 International Public License in the root
+LICENSE-DATA file applies only to:
+
+  a. project-owned dataset files that are explicitly identified as released
+     under CC BY 4.0 in their accompanying README, metadata, or file notice;
+     and
+
+  b. the project-authored dashboard screenshots stored in the
+     "Dahsboard Images" directory, to the extent that Agnibha Basak owns the
+     relevant rights.
+
+As of the repository audit at commit 5090084 on 7 August 2026, this repository
+does not contain a standalone recorded dataset file. Data stored in a live
+PostgreSQL database is not automatically covered by LICENSE-DATA.
+
+The data license does not grant permission to redistribute live user data,
+customer data, personal information, confidential site information, device
+identifiers, API keys, passwords, access tokens, other secrets, or third-party
+datasets. Those materials require a separate legal basis and appropriate
+privacy, confidentiality, security, and provenance review.
+
+Suggested attribution for covered CC BY 4.0 material:
+
+  DO Automation IoT material by Agnibha Basak, licensed under CC BY 4.0.
+  Source: https://github.com/Agnibha-31/DO-Automation-IoT
+  Changes: [describe changes, or state "none"].
+
+3. THIRD-PARTY MATERIAL
+
+Third-party libraries, packages, fonts, icons, interface primitives, and other
+dependencies remain subject to their own licenses and notices. Dependency
+names and versions are recorded in the package manifests and lock files.
+Additional frontend attribution information is provided in
+frontend/src/Attributions.md.
+
+No third-party work is relicensed merely because it is distributed with,
+linked from, displayed by, or used to build this project. Any third-party
+content visible inside a screenshot remains subject to the rights of its
+respective owner.
+
+4. NO INSTITUTIONAL ENDORSEMENT
+
+Reference to a research institution, employer, deployment service, technology,
+sensor model, or third-party product does not imply endorsement, sponsorship,
+certification, or ownership by that organization.
+
+5. SAFETY AND WARRANTY
+
+The project is a research and engineering prototype. It is not a certified
+safety system, medical device, environmental compliance instrument, or
+autonomous life-support controller. The applicable licenses provide the work
+without warranties or conditions. Users are responsible for validation,
+calibration, secure deployment, regulatory compliance, and independent
+fail-safe controls.
